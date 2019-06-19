@@ -23,5 +23,32 @@ bool CCore::keyAPressed = false;
 bool CCore::keyDPressed = false;
 
 CCore::CCore(void) {
-    
+    this->quitGame = false;
+    this->iFPS = 0;
+    this->iNumOfFPS = 0;
+    this->lFPSTime = 0;
+
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO);
+
+    window = SDL_CreateWindow("Super Mario!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, CCFG::GAME_WIDTH, CCFG::GAME_HEIGHT, SDL_WINDOW_SHOWN);
+
+    if (window == NULL) {
+        quitGame = true;
+    }
+
+    rR = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    // ----- ICO
+    std::string filename = "files/images/ico.bmp";
+    SDL_Surface* loadedSurface = SDL_LoadBMP(filename.c_str());
+    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 255, 0, 255));
+
+    SDL_SetWindowIcon(window, loadedSurface);
+    SDL_FreeSurface(loadedSurface);
+
+    mainEvent = new SDL_Event();
+    // ----- ICO
+
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+
 }
