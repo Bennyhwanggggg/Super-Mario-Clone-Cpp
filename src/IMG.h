@@ -17,7 +17,7 @@ public:
     ~CIMG(void);
 
     void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset);
-    void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset, bool bRoate);
+    void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset, bool bRotate);
     void DrawVert(SDL_Renderer * rR, int iXOffset, int iYOffset);
     void Draw(SDL_Renderer * rR, SDL_Rect rCrop, SDL_Rect rRect);
 
