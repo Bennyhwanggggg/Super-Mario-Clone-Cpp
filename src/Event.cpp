@@ -351,3 +351,25 @@ void Event::newLevel() {
 
 	CCore::getMap()->lockMinions();
 }
+
+
+void Event::resetData() {
+	vNEWDir.clear();
+	vNEWLength.clear();
+	vOLDDir.clear();
+	vOLDLength.clear();
+	resetRedraw();
+
+	this->eventTypeID = eNormal;
+
+	this->bState = true;
+	this->stepID = 0;
+	this->inEvent = false;
+	this->endGame = false;
+	this->newUnderWater = false;
+}
+
+void Event::resetRedraw() {
+	reDrawX.clear();
+	reDrawY.clear();
+}
