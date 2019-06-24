@@ -67,3 +67,10 @@ CCore::CCore(void) {
     CCFG::keyIDSpace = SDLK_SPACE;
     CCFG::keyIDShift = SDLK_LSHIFT;
 }
+
+CCore::~CCore(void) {
+	delete oMap;
+	delete mainEvent;
+	SDL_DestroyRenderer(rR);
+	SDL_DestroyWindow(window);
+}
