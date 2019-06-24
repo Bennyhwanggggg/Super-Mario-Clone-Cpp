@@ -114,3 +114,203 @@ void CCore::Input() {
 			break;
 	}
 }
+
+
+void CCore::InputMenu() {
+	if(mainEvent->type == SDL_KEYDOWN) {
+		CCFG::getMM()->setKey(mainEvent->key.keysym.sym);
+
+		switch(mainEvent->key.keysym.sym) {
+			case SDLK_s: 
+            case SDLK_DOWN:
+				if(!keyMenuPressed) {
+					CCFG::getMM()->keyPressed(2);
+					keyMenuPressed = true;
+				}
+				break;
+			case SDLK_w: 
+            case SDLK_UP:
+				if(!keyMenuPressed) {
+					CCFG::getMM()->keyPressed(0);
+					keyMenuPressed = true;
+				}
+				break;
+			case SDLK_KP_ENTER: 
+            case SDLK_RETURN:
+				if(!keyMenuPressed) {
+					CCFG::getMM()->enter();
+					keyMenuPressed = true;
+				}
+				break;
+			case SDLK_ESCAPE:
+				if(!keyMenuPressed) {
+					CCFG::getMM()->escape();
+					keyMenuPressed = true;
+				}
+				break;
+			case SDLK_LEFT: 
+            case SDLK_d:
+				if(!keyMenuPressed) {
+					CCFG::getMM()->keyPressed(3);
+					keyMenuPressed = true;
+				}
+				break;
+			case SDLK_RIGHT: 
+            case SDLK_a:
+				if(!keyMenuPressed) {
+					CCFG::getMM()->keyPressed(1);
+					keyMenuPressed = true;
+				}
+				break;
+		}
+	}
+
+	if(mainEvent->type == SDL_KEYUP) {
+		switch(mainEvent->key.keysym.sym) {
+			case SDLK_s: 
+            case SDLK_DOWN: 
+            case SDLK_w: 
+            case SDLK_UP: 
+            case SDLK_KP_ENTER: 
+            case SDLK_RETURN: 
+            case SDLK_ESCAPE: 
+            case SDLK_a: 
+            case SDLK_RIGHT: 
+            case SDLK_LEFT: 
+            case SDLK_d:
+				keyMenuPressed = false;
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+void CCore::InputPlayer() {
+	if(mainEvent->type == SDL_WINDOWEVENT) {
+		switch(mainEvent->window.event) {
+			case SDL_WINDOWEVENT_FOCUS_LOST:
+				CCFG::getMM()->resetActiveOptionID(CCFG::getMM()->ePasue);
+				CCFG::getMM()->setViewID(CCFG::getMM()->ePasue);
+				CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cPASUE);
+				CCFG::getMusic()->PauseMusic();
+				break;
+		}
+	}
+
+	if(mainEvent->type == SDL_KEYUP) {
+		if(mainEvent->key.keysym.sym == CCFG::keyIDD) {
+				if(firstDir) {
+					firstDir = false;
+				}
+				keyDPressed = false;
+			}
+
+			if(mainEvent->key.keysym.sym == CCFG::keyIDS) {
+				oMap->getPlayer()->setSquat(false);
+				keyS = false;
+			}
+		
+			if(mainEvent->key.keysym.sym == CCFG::keyIDA) {
+				if(!firstDir) {
+					firstDir = true;
+				}
+
+				keyAPressed = false;
+			}
+		
+			if(mainEvent->key.keysym.sym == CCFG::keyIDSpace) {
+				CCFG::keySpace = false;
+			}
+		
+			if(mainEvent->key.keysym.sym == CCFG::keyIDShift) {
+				if(keyShift) {
+					oMap->getPlayer()->resetRun();
+					keyShift = false;
+				}
+			}
+		switch(mainEvent->key.keysym.sym) {
+			case SDLK_KP_ENTER: 
+            case SDLK_RETURN: 
+            case SDLK_ESCAPE:
+				keyMenuPressed = false;
+				break;
+		}
+	}
+
+	if(mainEvent->type == SDL_KEYDOWN) {
+		if(mainEvent->key.keysym.sym == CCFG::keyIDD) {
+			keyDPressed = true;
+			if(!keyAPressed) {
+				firstDir = true;
+			}
+		}
+
+		if(mainEvent->key.keysym.sym == CCFG::keyIDS) {
+			if(!keyS) {
+				keyS = true;
+				if(!oMap->getUnderWater() && !oMap->getPlayer()->getInLevelAnimation()) oMap->getPlayer()->setSquat(true);
+			}
+		}
+		
+		if(mainEvent->key.keysym.sym == CCFG::keyIDA) {
+			keyAPressed = true;
+			if(!keyDPressed) {
+				firstDir = false;
+			}
+		}
+		
+		if(mainEvent->key.keysym.sym == CCFG::keyIDSpace) {
+			if(!CCFG::keySpace) {
+				oMap->getPlayer()->jump();
+				CCFG::keySpace = true;
+			}
+		}
+		
+		if(mainEvent->key.keysym.sym == CCFG::keyIDShift) {
+			if(!keyShift) {
+				oMap->getPlayer()->startRun();
+				keyShift = true;
+			}
+		}
+
+		switch(mainEvent->key.keysym.sym) {
+			case SDLK_KP_ENTER: case SDLK_RETURN:
+				if(!keyMenuPressed) {
+					CCFG::getMM()->enter();
+					keyMenuPressed = true;
+				}
+			case SDLK_ESCAPE:
+				if(!keyMenuPressed && CCFG::getMM()->getViewID() == CCFG::getMM()->eGame) {
+					CCFG::getMM()->resetActiveOptionID(CCFG::getMM()->ePasue);
+					CCFG::getMM()->setViewID(CCFG::getMM()->ePasue);
+					CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cPASUE);
+					CCFG::getMusic()->PauseMusic();
+					keyMenuPressed = true;
+				}
+				break;
+		}
+	}
+
+	if(keyAPressed) {
+		if(!oMap->getPlayer()->getMove() && firstDir == false && !oMap->getPlayer()->getChangeMoveDirection() && !oMap->getPlayer()->getSquat()) {
+			oMap->getPlayer()->startMove();
+			oMap->getPlayer()->setMoveDirection(false);
+		} else if(!keyDPressed && oMap->getPlayer()->getMoveSpeed() > 0 && firstDir != oMap->getPlayer()->getMoveDirection()) {
+			oMap->getPlayer()->setChangeMoveDirection();
+		}
+	}
+
+	if(keyDPressed) {
+		if(!oMap->getPlayer()->getMove() && firstDir == true && !oMap->getPlayer()->getChangeMoveDirection() && !oMap->getPlayer()->getSquat()) {
+			oMap->getPlayer()->startMove();
+			oMap->getPlayer()->setMoveDirection(true);
+		} else if(!keyAPressed && oMap->getPlayer()->getMoveSpeed() > 0 && firstDir != oMap->getPlayer()->getMoveDirection()) {
+			oMap->getPlayer()->setChangeMoveDirection();
+		}
+	}
+
+	if(oMap->getPlayer()->getMove() && !keyAPressed && !keyDPressed) {
+		oMap->getPlayer()->resetMove();
+	}
+}
