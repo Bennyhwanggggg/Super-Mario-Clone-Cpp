@@ -51,4 +51,19 @@ CCore::CCore(void) {
 
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
+    oMap = new Map(rR);
+    CCFG::getMM()->setActiveOption(rR);
+    CCFG::getSMBLOGO()->setIMG("super_mario_bros", rR);
+
+    CCFG::getMusic()->PlayMusic();
+
+    this->keyMenuPressed = this->movePressed = this->keyS = this->keyW = this->keyA = this->keyD = this->keyShift = false;
+    this->keyAPressed = this->keyDPressed = this->firstDir = false;
+    this->mouseX = this->mouseY = 0;
+
+    CCFG::keyIDA = SDLK_a;
+    CCFG::keyIDS = SDLK_s;
+    CCFG::keyIDD = SDLK_d;
+    CCFG::keyIDSpace = SDLK_SPACE;
+    CCFG::keyIDShift = SDLK_LSHIFT;
 }
