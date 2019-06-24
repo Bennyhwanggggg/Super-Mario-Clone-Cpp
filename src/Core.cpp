@@ -74,3 +74,28 @@ CCore::~CCore(void) {
 	SDL_DestroyRenderer(rR);
 	SDL_DestroyWindow(window);
 }
+
+
+void CCore::mainLoop() {
+	lFPSTime = SDL_GetTicks();
+
+	while(!quitGame && mainEvent->type != SDL_QUIT) {
+		frameTime = SDL_GetTicks();
+		SDL_PollEvent(mainEvent);
+		SDL_RenderClear(rR);
+
+		CCFG::getMM()->setBackgroundColor(rR);
+		SDL_RenderFillRect(rR, NULL);
+
+		Input();
+		MouseInput();
+		Update();
+		Draw();
+
+		SDL_RenderPresent(rR);
+		
+		if(SDL_GetTicks() - frameTime < MIN_FRAME_TIME) {
+			SDL_Delay(MIN_FRAME_TIME - (SDL_GetTicks () - frameTime));
+		}
+	}
+}
