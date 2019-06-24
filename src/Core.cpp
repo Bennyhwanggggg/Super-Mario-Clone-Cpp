@@ -99,3 +99,18 @@ void CCore::mainLoop() {
 		}
 	}
 }
+
+void CCore::Input() {
+	switch(CCFG::getMM()->getViewID()) {
+		case 2: case 7:
+			if(!oMap->getInEvent()) {
+				InputPlayer();
+			} else {
+				resetMove();
+			}
+			break;
+		default:
+			InputMenu();
+			break;
+	}
+}
