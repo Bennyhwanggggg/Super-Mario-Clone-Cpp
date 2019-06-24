@@ -354,3 +354,26 @@ void CCore::MouseInput() {
 			break;
     }
 }
+
+void CCore::resetKeys() {
+	movePressed = keyMenuPressed = keyS = keyW = keyA = keyD = CCFG::keySpace = keyShift = keyAPressed = keyDPressed = false;
+}
+
+void CCore::Update() {
+	CCFG::getMM()->Update();
+}
+
+
+void CCore::Draw() {
+	CCFG::getMM()->Draw(rR);
+}
+
+/* ******************************************** */
+
+void CCore::resetMove() {
+	this->keyAPressed = this->keyDPressed = false;
+}
+
+Map* CCore::getMap() {
+	return oMap;
+}
