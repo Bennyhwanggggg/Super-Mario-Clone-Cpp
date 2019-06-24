@@ -314,3 +314,43 @@ void CCore::InputPlayer() {
 		oMap->getPlayer()->resetMove();
 	}
 }
+
+void CCore::MouseInput() {
+    switch(mainEvent->type) 
+    {
+        case SDL_MOUSEBUTTONDOWN: {
+            switch (mainEvent->button.button) 
+            {
+            case SDL_BUTTON_LEFT:
+                mouseLeftPressed = true;
+                break;
+            case SDL_BUTTON_RIGHT:
+					mouseRightPressed = true;
+					break;
+            default:
+                break;
+            }
+            break;
+        }
+        case SDL_MOUSEMOTION: {
+            SDL_GetMouseState(&mouseX, &mouseY);
+            break;
+        }
+        case SDL_MOUSEBUTTONUP: {
+            switch (mainEvent->button.button) {
+				case SDL_BUTTON_LEFT:
+					mouseLeftPressed = false;
+					break;
+				case SDL_BUTTON_RIGHT:
+					mouseRightPressed = false;
+					break;
+			}
+			break;
+        }
+        case SDL_MOUSEWHEEL:
+			if(mainEvent->wheel.timestamp > SDL_GetTicks() - 2) {
+				//CCFG::getMM()->getLE()->mouseWheel(mainEvent->wheel.y);
+			}
+			break;
+    }
+}
