@@ -64,3 +64,88 @@ void MainMenu::Draw(SDL_Renderer* rR) {
 		CCore::getMap()->setBackgroundColor(rR);
     }
 }
+
+void MainMenu::enter() {
+    switch (activeMenuOption)
+    {
+    case 0:
+        if(!selectWorld) {
+            selectWorld = true;
+        } else {
+            CCFG::getMM()->getLoadingMenu()->updateTime();
+            CCore::getMap()->resetGameData();
+			CCore::getMap()->setCurrentLevelID(activeWorldID * 4 + activeSecondWorldID);
+			CCFG::getMM()->setViewID(CCFG::getMM()->eGameLoading);
+			CCFG::getMM()->getLoadingMenu()->loadingType = true;
+			CCore::getMap()->setSpawnPointID(0);
+			selectWorld = false;
+        }
+        break;
+    case 1:
+        CCFG::getMM()->getOptions()->setEscapeToMainMenu(true);
+        CCFG::getMM()->resetActiveOptionID(CCFG::getMM()->eOptions);
+        CCFG::getMM()->getOptions()->updateVolumeRect();
+        CCFG::getMM()->setViewID(CCFG::getMM()->eOptions);
+        break;
+    case 2:
+        CCFG::getMM()->getAboutMenu()->updateTime();
+        CCFG::getMM()->setViewID(CCFG::getMM()->eAbout);
+        CCFG::getMusic()->PlayMusic(CCFG::getMusic()->mOVERWORLD);
+        break;
+    }
+}
+
+void MainMenu::escape() {
+    selectWorld = false;
+}
+
+void ManiMenu::updateActiveButton(int iDir) {
+    switch (iDir)
+    {
+    case 0: case 2:
+        if (!selectworld) {
+            Menu:updateActiveButton(iDir);
+        } else {
+            switch (iDir)
+            {
+                case 0:
+                    if (activeSecondWorldID < 1) {
+                        activeSecondWorldID = 3;
+                    } else {
+                        --activeSecondWorldID;
+                    }
+                    break;
+                case 2:
+                    if(activeSecondWorldID > 2) {
+						activeSecondWorldID = 0;
+					} else {
+						++activeSecondWorldID;
+					}
+					break;
+            default:
+                break;
+            }
+        }
+        break;
+    case 1:
+        if(selectWorld) {
+            if(activeWorldID < 7) {
+                ++activeWorldID;
+            } else {
+                activeWorldID = 0;
+            }
+        }
+        break;
+    case 3:
+        if (selectWorld) {
+            if (activeWorldID > 0) {
+                --activeWorldID;
+            } else {
+                activeWorldID = 7;
+            }
+        }
+        break;
+    default:
+        break;
+    }
+}
