@@ -74,3 +74,26 @@ void Spring::Update() {
 void Spring::Draw(SDL_Renderer* rR, CIMG* iIMG) {
     iIMG->Draw(rR, (int)fXPos + (int)CCore::getMap()->getXPos(), (int)fYPos, false);
 }
+
+void Spring::minionPhysics() {}
+
+void Spring::collisionWithPlayer(bool TOP) {
+    if (!inAnimation) {
+        if (TOP && CCore::getMap()->getPlayer()->getJumpState() == 2) {
+            CCore::getMap()->getPlayer()->stopMove();
+            CCore::getMap()->getPlayer()->resetJump();
+            CCore::getMap()->getPlayer()->setNextFallFrameID(16);
+            inAnimation = true;
+            extraJump = false;
+            CCFG::keySpace = false;
+        } else {
+            if (CCore::getMap()->getPlayer()->getMoveDirection()) {
+                CCore::getMap()->getPlayer()->setXPos((float)CCore::getMap()->getPlayer()->getXPos() - CCore::getMap()->getPlayer()->getMoveSpeed());
+            } else {
+				CCore::getMap()->getPlayer()->setXPos((float)CCore::getMap()->getPlayer()->getXPos() + CCore::getMap()->getPlayer()->getMoveSpeed());
+			}
+        }
+    }
+}
+
+void Spring::setMinionState(int minionState) { }
