@@ -24,6 +24,49 @@ void Spring::Update() {
         if (CCFG::keySpace) {
             extraJump = true;
             CCore::getMap()->getPlayer()->resetJump();
+            CCore::getMap()->getPlayer()->setNextFallFrameID(16);
+        } else {
+            CCore::getMap()->getPlayer()->stopMove();
+        }
+
+        CCore::getMap()->getPlayer()->setMarioSpriteID(5);
+        if (nextFrameID <= 0) {
+            switch (minionState)
+            {
+            case 0:
+                iBlockID = iBlockID == 37 ? 38 : 41;
+                minionState = 1;
+                CCore::getMap()->getPlayer()->setYPos(CCore::getMap()->getPlayer()->getYPos() + 16.0f);
+                break;
+            case 1:
+                iBlockID = iBlockID == 38 ? 38 : 42;
+                minionState = 2;
+                CCore::getMap()->getPlayer()->setYPos(CCore::getMap()->getPlayer()->getYPos() + 16.0f);
+                break;
+            case 2:
+                iBlockID = iBlockID == 39 ? 38 : 41;
+                minionState = 3;
+				CCore::getMap()->getPlayer()->setYPos(CCore::getMap()->getPlayer()->getYPos() - 16.0f);
+                break;
+            case 3:
+                iBlockID = iBlockID == 38 ? 37 : 40;
+                minionState = 0
+                CCore::getMap()->getPlayer()->setYPos(CCore::getMap()->getPlayer()->getYPos() - 16.0f);
+                CCore::getMap()->getPlayer()->resetJump();
+                CCore::getMap()->getPlayer()->startJump(4 + (extraJump ? 5 : 0));
+                CCore::getMap()->getPlayer()->setSpringJump(true);
+                CCore::getMap()->getPlayer()->startMove();
+                if (extraJump) {
+                    CCore::getMap()->getPlayer()->setCurrentJumpSpeed(10.5f);
+                }
+                inAnimation = false;
+                break;
+            default:
+                break;
+            }
+            nextFrameID = 4;
+        } else {
+            --nextFrameID;
         }
     }
 }
