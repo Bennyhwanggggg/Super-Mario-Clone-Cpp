@@ -181,3 +181,16 @@ void Minion::points(int iPoints) {
     CCore::getMap()->getPlayer()->setScore(CCore::getMap()->getPlayer()->getScore() + iPoints * CCore::getMap()->getPlayer()->getComboPoints());
     CCore::getMap()->getPlayer()->addComboPoints();
 }
+
+void Minion::minionDeathAnimation() {
+	fXPos += (moveDirection ? -1.5f : 1.5f);
+	fYPos += 2 * (deadTime > 8 ? -1 : deadTime > 2 ? 1 : 4.25f);
+
+	if(deadTime > 0) {
+		--deadTime;
+	}
+
+	if(fYPos > CCFG::GAME_HEIGHT) {
+		minionState = -1;
+	}
+}
