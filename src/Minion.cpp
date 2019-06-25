@@ -139,3 +139,45 @@ void Minion::updateYPos(int iN) {
 		fYPos += 1;
 	}
 }
+
+void Minion::collisionEffect() {
+    if (minionSpawned) {
+        moveDirection = !moveDirection;
+    }
+}
+
+void Minion::collisionWithPlayer(bool TOP) {
+
+}
+
+void Minion::collisionWithAnotherUnit() {
+
+}
+
+void Minon::lockMinion() {
+
+}
+
+void Minion::Spawn() {
+    if ((fXPos >= -CCore::getMap()->getXPos() && fXPos <= -CCore::getMap()->getXPos() + CCFG::GAME_WIDTH) || (fXPos + iHitBoXX >= -CCore::getMap()->getXPos() && fXPos + iHitBoxX <= -CCore::getMap()->getXPos() + CCFG::GAME_WIDTH)) {
+        minionSpawned = true;
+    }
+}
+
+void Minion::startJump(int iH) {
+    jumpState = 1;
+    currentJumpSpeed = startJumpSpeed;
+    jumpDistance = 32*iH + 16.0f;
+    currentJumpDistance = 0;
+}
+
+void Minion::resetJump() {
+    jumpState = 0;
+    currentFallingSpeed = 2.7f;
+}
+
+void Minion::points(int iPoints) {
+    CCore::getMap()->addPoints((int)fXPos + 7, (int)fYPos, std::to_string(iPoints*CCore::getMap()->getPlayer()->getComboPoints()), 8, 16);
+    CCore::getMap()->getPlayer()->setScore(CCore::getMap()->getPlayer()->getScore() + iPoints * CCore::getMap()->getPlayer()->getComboPoints());
+    CCore::getMap()->getPlayer()->addComboPoints();
+}
