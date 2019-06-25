@@ -194,3 +194,42 @@ void Minion::minionDeathAnimation() {
 		minionState = -1;
 	}
 }
+
+int Minion::getBloockID() {
+	return iBlockID;
+}
+
+void Minion::setBlockID(int iBlockID) {
+	this->iBlockID = iBlockID;
+}
+
+int Minion::getXPos() {
+	return (int)fXPos;
+}
+
+int Minion::getYPos() {
+	return (int)fYPos;
+}
+
+void Minion::setYPos(int iYPos) {
+	this->fYPos = (float)iYPos;
+}
+
+int Minion::getMinionState() {
+	return minionState;
+}
+
+void Minion::setMinionState(int minionState) {
+	this->minionState = minionState;
+	if(minionState == -2) {
+		deadTime = 16;
+		fYPos -= iHitBoxY/4;
+		points(200);
+		collisionOnlyWithPlayer = true;
+		CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cSHOT);
+	}
+}
+
+bool Minion::getPowerUP() { 
+    return true; 
+}
