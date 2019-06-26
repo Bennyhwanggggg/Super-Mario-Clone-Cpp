@@ -370,3 +370,178 @@ void Player::Update() {
 		}
 	}
 }
+
+void Player::playerPhysics() {
+	if(!CCore::getMap()->getUnderWater()) {
+		if (jumpState == 1) {
+			updateYPos(-(int)currentJumpSpeed);
+			currentJumpDistance += (int)currentJumpSpeed;
+
+			currentJumpSpeed *= (currentJumpDistance / jumpDistance > 0.75f ? 0.972f : 0.986f);
+		
+			if (currentJumpSpeed < 2.5f) {
+				currentJumpSpeed = 2.5f;
+			}
+
+			if(!CCFG::keySpace && currentJumpDistance > 64 && !springJump) {
+				jumpDistance = 16;
+				currentJumpDistance = 0;
+				currentJumpSpeed = 2.5f;
+			}
+
+			if (jumpDistance <= currentJumpDistance) {
+				jumpState = 2;
+			}
+		} else {
+			if(onPlatformID == -1) {
+				onPlatformID = CCore::getMap()->checkCollisionWithPlatform((int)fXPos, (int)fYPos, getHitBoxX(), getHitBoxY());
+				if(onPlatformID >= 0) {
+					if (CCore::getMap()->checkCollisionLB((int)(fXPos - CCore::getMap()->getXPos() + 2), (int)fYPos + 2, getHitBoxY(), true) || CCore::getMap()->checkCollisionRB((int)(fXPos - CCore::getMap()->getXPos() - 2), (int)fYPos + 2, getHitBoxX(), getHitBoxY(), true)) {
+						onPlatformID = -1;
+						resetJump();
+					} else {
+						fYPos = (float)CCore::getMap()->getPlatform(onPlatformID)->getYPos() - getHitBoxY();
+						resetJump();
+						CCore::getMap()->getPlatform(onPlatformID)->turnON();
+					}
+				}
+			} else {
+				onPlatformID = CCore::getMap()->checkCollisionWithPlatform((int)fXPos, (int)fYPos, getHitBoxX(), getHitBoxY());
+			}
+		
+			if(onPlatformID >= 0) {
+				if (CCore::getMap()->checkCollisionLB((int)(fXPos - CCore::getMap()->getXPos() + 2), (int)fYPos + 2, getHitBoxY(), true) || CCore::getMap()->checkCollisionRB((int)(fXPos - CCore::getMap()->getXPos() - 2), (int)fYPos + 2, getHitBoxX(), getHitBoxY(), true)) {
+					onPlatformID = -1;
+					resetJump();
+				} else {
+					fYPos += CCore::getMap()->getPlatform(onPlatformID)->getMoveY();
+					CCore::getMap()->getPlatform(onPlatformID)->moveY();
+					//if(moveSpeed == 0)
+					CCore::getMap()->setXPos(CCore::getMap()->getXPos() - CCore::getMap()->getPlatform(onPlatformID)->getMoveX());
+			
+					jumpState = 0;
+				}
+			}
+			else if (!CCore::getMap()->checkCollisionLB((int)(fXPos - CCore::getMap()->getXPos() + 2), (int)fYPos + 2, getHitBoxY(), true) &&
+				!CCore::getMap()->checkCollisionRB((int)(fXPos - CCore::getMap()->getXPos() - 2), (int)fYPos + 2, getHitBoxX(), getHitBoxY(), true)) {
+
+				if(nextFallFrameID > 0) {
+					--nextFallFrameID;
+				} else {
+					currentFallingSpeed *= 1.05f;
+
+					if (currentFallingSpeed > startJumpSpeed) {
+						currentFallingSpeed = startJumpSpeed;
+					}
+
+					updateYPos((int)currentFallingSpeed);
+				}
+				
+
+				jumpState = 2;
+
+				setMarioSpriteID(5);
+			} else if(jumpState == 2) {
+				resetJump();
+			} else {
+				checkCollisionBot(0, 0);
+			}
+		}
+	} else {
+		if(nextBubbleTime + 685 < SDL_GetTicks()) {
+			CCore::getMap()->addBubble((int)(fXPos - CCore::getMap()->getXPos() + (moveDirection ? getHitBoxX() - rand()%8 : rand()%8)), (int)fYPos + 4);
+			nextBubbleTime = SDL_GetTicks() + rand()%715;
+		}
+
+		if (jumpState == 1) {
+			if(fYPos > CCFG::GAME_HEIGHT - 12*32 - 16) {
+				updateYPos(-2);
+				currentJumpDistance += 2;
+
+				swimingAnimation();
+
+				if (jumpDistance <= currentJumpDistance) {
+					jumpState = 2;
+					currentJumpDistance = 0;
+					nextFallFrameID = 4;
+				}
+			} else {
+				jumpState = 2;
+				nextFallFrameID = 14;
+				currentJumpDistance = 0;
+			}
+		} else {
+			if (!CCore::getMap()->checkCollisionLB((int)(fXPos - CCore::getMap()->getXPos() + 2), (int)fYPos + 2, getHitBoxY(), true) &&
+				!CCore::getMap()->checkCollisionRB((int)(fXPos - CCore::getMap()->getXPos() - 2), (int)fYPos + 2, getHitBoxX(), getHitBoxY(), true)) {
+
+				if(nextFallFrameID > 0) {
+					--nextFallFrameID;
+				} else {
+					if(currentJumpDistance < 32) {
+						updateYPos(1);
+						++currentJumpDistance;
+					} else {
+						updateYPos(2);
+					}
+				}
+
+				jumpState = 2;
+
+				swimingAnimation();
+			} else if(jumpState == 2) {
+				resetJump();
+			}
+		}
+	}
+}
+
+void Player::movePlayer() {
+    if (bMove && !changeMoveDirection && (!bSquat || powerLVL == 0)) {
+        if (moveSpeed > currentMaxMove) {
+            --moveSpeed;
+        } else if (SDL_GetTicks() - (100 + 35*moveSpeed) >= iTimePassed && moveSpeed < currentMaxMove) {
+            ++moveSpeed;
+            iTimePassed = SDL_GetTicks();
+        } else if (moveSpeed == 0) {
+            moveSpeed = 1;
+        }
+    } else {
+        if (SDL_GetTicks() - (50 + 15 * (currentMaxMove - moveSpeed) * (bSquat && powerLVL > 0 ? 6 : 1)) > iTimePassed && moveSpeed != 0) {
+            --moveSpeed;
+            iTimePassed = SDL_GetTicks();
+            if (jumpState == 0 && !CCore::getMap()->getUnderWater()) {
+                setMarioSpriteID(6);
+            }
+        }
+
+        if (changeMoveDirection && moveSpeed <= 1) {
+            moveDirection = newMoveDirection;
+            changeMoveDirection = false;
+            bMove = true;
+        }
+    }
+
+    if (moveSpeed > 0) {
+        if (moveDirection) {
+            updateXPos(moveSpeed);
+        } else {
+            updateXPos(-moveSpeed);
+        }
+
+        // Moving Animation
+        if (CCore::getMap()->getUnderWater()) {
+            swimingAnimation();
+        } else if (!changeMoveDirection && jumpState == 0 && bMove) {
+            moveAnimation();
+        }
+    } else if (jumpState == 0) {
+        setMarioSpriteID(1);
+        updateXPos(0);
+    } else {
+        updateXPos(0);
+    }
+
+    if (bSquat && !CCore::getMap()->getUnderWater() && powerLVL > 0) {
+        setMarioSpriteID(7);
+    }
+}
