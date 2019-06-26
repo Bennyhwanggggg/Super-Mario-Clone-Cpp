@@ -337,3 +337,36 @@ Player::Player(SDL_Renderer* rR, float fXPos, float fYPos) {
 	sMario.push_back(new Sprite(rR,  tempS, tempI, true));
 	tempS.clear();
 }
+
+Player::~Player(void) {
+	for(std::vector<Sprite*>::iterator i = sMario.begin(); i != sMario.end(); i++) {
+		delete (*i);
+	}
+
+	delete tMarioLVLUP;
+}
+
+void Player::Update() {
+	playerPhysics();
+	movePlayer();
+
+	if(iFrameID > 0) {
+		--iFrameID;
+	} else if(iComboPoints > 1) {
+		--iComboPoints;
+	}
+
+	if(powerLVL == 2) {
+		if(nextFireBallFrameID > 0) {
+			--nextFireBallFrameID;
+		}
+	}
+
+	if(inLevelDownAnimation) {
+		if(inLevelDownAnimationFrameID > 0) {
+			--inLevelDownAnimationFrameID;
+		} else {
+			unKillAble = false;
+		}
+	}
+}
