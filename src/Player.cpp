@@ -545,3 +545,83 @@ void Player::movePlayer() {
         setMarioSpriteID(7);
     }
 }
+
+void Player::powerUPAnimation() {
+    if (inLevelAnimation) {
+        if (inLevelAnimation%15 < 5) {
+            iSpriteID = 12;
+            if (inLevelAnimationFrameID != 0 && inLevelAnimationFrameID%15 == 0) {
+                fYPos += 16;
+                fXPos -= 4;
+            }
+        } else if (inLevelAnimation%15 < 10) {
+            iSpriteID = 67;
+            if (inLevelAnimationFrameID%15 == 5) {
+                fYPos += 16;
+                fXPos += 1;
+            }
+        } else {
+            iSpriteID = 1;
+			if(inLevelAnimationFrameID%15 == 10) {
+				fYPos -= 32;
+				fXPos += 3;
+			}
+        }
+
+        ++inLevelAnimationFrameID;
+		if(inLevelAnimationFrameID > 59) {
+			inLevelAnimation = false;
+			fYPos += 32;
+			if(jumpState != 0) {
+				setMarioSpriteID(5);
+			}
+		}
+
+    } else if (powerLVL == 1) {
+        if(inLevelAnimationFrameID%15 < 5) {
+			iSpriteID = 1;
+			if(inLevelAnimationFrameID != 0 && inLevelAnimationFrameID%15 == 0) {
+				fYPos += 32;
+				fXPos += 4;
+			}
+		} else if(inLevelAnimationFrameID%15 < 10) {
+			iSpriteID = 67;
+			if(inLevelAnimationFrameID%15 == 5) {
+				fYPos -= 16;
+				fXPos -= 3;
+			}
+		} else {
+			iSpriteID = 12;
+			if(inLevelAnimationFrameID%15 == 10) {
+				fYPos -= 16;
+				fXPos -= 1;
+			}
+		}
+
+        ++inLevelAnimationFrameID;
+		if(inLevelAnimationFrameID > 59) {
+			inLevelAnimation = false;
+			if(jumpState != 0) {
+				setMarioSpriteID(5);
+			}
+		}
+
+    } else if (powerLVL == 2) {
+        if (inLevelAnimationFrameID%10 < 5) {
+            iSpriteID = iSpriteID%11 + 22;
+        } else {
+            iSpriteID = iSpriteID%11 + 33;
+        }
+
+        ++inLevelAnimationFrameID;
+        if (inLevelAnimationFrameID > 59) {
+            inLevelAnimation = false;
+            if (jumpState != 0) {
+                setMarioSpriteID(5);
+            }
+            iSpriteID = iSpriteID%11 + 22;
+        }
+    } else {
+        inLevelAnimation = false;
+    }
+}
