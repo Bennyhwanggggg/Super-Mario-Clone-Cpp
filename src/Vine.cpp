@@ -152,8 +152,5 @@ void Vine::collisionWithPlayer(bool TOP) {
 			CCore::getMap()->getEvent()->vNEWDir.push_back(CCore::getMap()->getEvent()->eVINE2);
 			CCore::getMap()->getEvent()->vNEWLength.push_back(16);
 		}
-		
-	} else {
-
-	}
+	} 
 }
