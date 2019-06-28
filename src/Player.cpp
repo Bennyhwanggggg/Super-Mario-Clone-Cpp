@@ -21,7 +21,7 @@ Player::Player(SDL_Renderer* rR, float fXPos, float fYPos) {
     this->inLevelAnimationType = false;
 
     this->unKillAble = false;
-    this->startEffect = false;
+    this->starEffect = false;
     this->unKillAbleTimeFrameID = 0;
 
     this->inLevelDownAnimation = false;

@@ -1,6 +1,6 @@
 #include "BlockDebris.h"
 #include "CFG.h"
-#include "CFG.h"
+#include "Core.h"
 
 BlockDebris::BlockDebris(int iXPos, int iYPos) {
     this->debrisState = 0;

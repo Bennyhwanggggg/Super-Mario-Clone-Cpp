@@ -54,8 +54,10 @@ public:
 
     static bool mouseLeftPressed;
     static bool mouseRightPressed;
+    static int mouseX;
+    static int mouseY;
 
     static Map* getMap();
-}
+};
 
 #endif

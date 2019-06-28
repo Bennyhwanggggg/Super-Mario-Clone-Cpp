@@ -24,6 +24,6 @@ public:
 	void collisionEffect();
 	void lockMinion();
 	void setMinionState(int minionState);
-}
+};
 
 #endif // !PLANT_H

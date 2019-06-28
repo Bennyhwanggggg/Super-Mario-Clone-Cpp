@@ -19,6 +19,6 @@ public:
     void mouseWheel(int Y);
     void editMap();
     void drawStruct(SDL_Renderer* rR);
-}
+};
 
 #endif // !LEVELEDITOR_H

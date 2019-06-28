@@ -34,6 +34,6 @@ public:
 	bool getDeath();
 	bool getUse();
 	bool getVisible();
-}
+};
 
 #endif // ! BLOCK_H

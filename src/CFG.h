@@ -30,12 +30,16 @@ public:
     static int keyIDSpace;
     static int keyIDShift;
 
+
+	static std::string getKeyString(int keyID);
     static CIMG* getSMBLOGO();
 
     static Text* getText();
 
-    static MenuManger* getMM();
+    static MenuManager* getMM();
     static Music* getMusic();
 
     static bool canMoveBackward;
 };
+
+#endif

@@ -3,11 +3,11 @@
 
 Flower::Flower(int iXPos, int fYPos, int iX, int iY) {
     this->fXPos = (float)iXPos;
-    this->fYPos = (float)fYpos;
+    this->fYPos = (float)fYPos;
     this->iBlockID = 6;
     this->moveSpeed = 2;
     this->inSpawnState = true;
-    this->minionDeathAnimation = true;
+    this->minionSpawned = true;
     this->inSpawnY = 32;
     this->moveDirection = false;
     this->collisionOnlyWithPlayer = true;

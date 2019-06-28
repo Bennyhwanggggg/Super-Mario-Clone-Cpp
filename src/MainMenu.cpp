@@ -7,14 +7,14 @@ MainMenu::MainMenu(void) {
     this->lMO.push_back(new MenuOption("Options", 222, 308));
     this->lMO.push_back(new MenuOption("About", 237, 340));
 
-    this->numOfMenuOptions = lMO.size()
+    this->numOfMenuOptions = lMO.size();
 
     this->selectWorld = false;
 
     rSelectWorld.x = 122;
     rSelectWorld.y = 280;
     rSelectWorld.w = 306;
-    rSelectWrold.h = 72;
+    rSelectWorld.h = 72;
 
     this->activeWorldID = this->activeSecondWorldID = 0;
 }
@@ -52,7 +52,7 @@ void MainMenu::Draw(SDL_Renderer* rR) {
 
 		CCFG::getText()->Draw(rR, "SELECT WORLD", rSelectWorld.x + rSelectWorld.w/2 - CCFG::getText()->getTextWidth("SELECT WORLD")/2, rSelectWorld.y + 16, 16, 255, 255, 255);
 
-        for(int i=0; extraX=0l i<8; i++) {
+        for(int i=0, extraX=0; i<8; i++) {
             if (i == activeWorldID) {
                 CCFG::getText()->Draw(rR, std::to_string(i + 1) + "-" + std::to_string(activeSecondWorldID + 1), rSelectWorld.x + 16*(i + 1) + 16*i + extraX, rSelectWorld.y + 16 + 24, 16, 255, 255, 255);
                 extraX = 32;
@@ -99,11 +99,11 @@ void MainMenu::escape() {
     selectWorld = false;
 }
 
-void ManiMenu::updateActiveButton(int iDir) {
+void MainMenu::updateActiveButton(int iDir) {
     switch (iDir)
     {
     case 0: case 2:
-        if (!selectworld) {
+        if (!selectWorld) {
             Menu:updateActiveButton(iDir);
         } else {
             switch (iDir)

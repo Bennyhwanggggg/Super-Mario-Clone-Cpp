@@ -20,6 +20,6 @@ public:
 
     // -- true = LOADING, false = GAME OVER
     bool loadingType;
-}
+};
 
 #endif // !LOADINGMENU_H

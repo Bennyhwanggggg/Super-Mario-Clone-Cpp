@@ -14,9 +14,9 @@ int CCFG::GAME_HEIGHT = 448;
 int CCFG::GAME_WIDTH = 800;
 
 Text* CCFG::oText = new Text();
-CIMG* CCFG::tSMBLOGO - new CIMG();
+CIMG* CCFG::tSMBLOGO = new CIMG();
 
-MenuManager* CCFG::oMM = new MenuManger();
+MenuManager* CCFG::oMM = new MenuManager();
 Music* CCFG::oMusic = new Music();
 
 bool CCFG::keySpace = false;

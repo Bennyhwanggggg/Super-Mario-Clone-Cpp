@@ -36,7 +36,7 @@ void Goombas::collisionWithPlayer(bool TOP) {
         setMinionState(-2);
     } else if (TOP) {
         if (minionState == 0) {
-            minionState == 1;
+            minionState = 1;
             iBlockID = CCore::getMap()->getLevelType() == 0 || CCore::getMap()->getLevelType() == 4 ? 1: CCore::getMap()->getLevelType() == 1 ? 9 : 11;
             deadTime = SDL_GetTicks();
             CCore::getMap()->getPlayer()->resetJump();

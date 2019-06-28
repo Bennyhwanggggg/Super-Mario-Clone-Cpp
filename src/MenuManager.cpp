@@ -1,4 +1,4 @@
-#include "MenuManger.h"
+#include "MenuManager.h"
 #include "Core.h"
 
 MenuManager::MenuManager(void) {

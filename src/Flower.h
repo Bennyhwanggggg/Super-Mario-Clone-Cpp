@@ -21,6 +21,6 @@ public:
     void Draw(SDL_Renderer* rR, CIMG* iIMG);
     void collisionWithPlayer(bool TOP);
     void setMinionState(int minionState);
-}
+};
 
 #endif // !FLOWER_H

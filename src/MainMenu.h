@@ -11,7 +11,7 @@ private:
     bool selectWorld;
     int activeWorldID;
     int activeSecondWorldID;
-    SDL_Rect rSe
+    SDL_Rect rSelectWorld;
 public:
     MainMenu(void);
     ~MainMenu(void);
@@ -23,6 +23,6 @@ public:
     void escape();
 
     void updateActiveButton(int iDir);
-}
+};
 
 #endif // !MAINMENU_H

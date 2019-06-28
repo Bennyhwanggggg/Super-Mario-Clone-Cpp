@@ -27,7 +27,7 @@ void Toad::minionPhysics() {
 }
 
 void Toad::Draw(SDL_Renderer* rR, CIMG* iIMG) {
-    iIMG->Draw(rR, (int)(fXPos + CCore::getMap()->getPos()), (int)fYPos, !moveDirection);
+    iIMG->Draw(rR, (int)(fXPos + CCore::getMap()->getXPos()), (int)fYPos, !moveDirection);
 }
 
 void Toad::collisionWithPlayer(bool TOP) {

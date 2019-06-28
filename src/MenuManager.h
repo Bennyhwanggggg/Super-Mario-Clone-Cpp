@@ -22,8 +22,6 @@ private:
 	AboutMenu* oAboutMenu;
 	OptionsMenu* oOptionsMenu;
 	PauseMenu* oPauseMenu;
-	//Console* oConsole;
-	//LevelEditor* oLE;
 
 public:
 	MenuManager(void);
