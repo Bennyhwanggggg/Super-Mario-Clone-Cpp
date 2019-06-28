@@ -32,3 +32,6 @@
 
 # CMake
 build
+
+# Mac
+**/.DS_Store
