@@ -2,7 +2,7 @@
 Super Mario Clone made using C++ and SDL2.  
 
 ## Build Pre-requisites
-Windows:
+Windows:  
 Install the `Runtime Binary` [here](https://www.libsdl.org/download-2.0.php)
 
 FreeBSD:
@@ -10,7 +10,7 @@ FreeBSD:
 pkg install cmake sdl2 sdl2_image sdl2_mixer
 ```
 
-Mac OS X:
+Mac OS X:  
 Install the `Runtime Binary` [here](https://www.libsdl.org/download-2.0.php)  
 Alternatively using brew:
 ```
