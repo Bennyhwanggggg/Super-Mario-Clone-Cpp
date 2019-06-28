@@ -261,14 +261,6 @@ void Map::UpdateMinionsCollisions() {
 										lMinion[i][j]->setMinionState(-2);
 										lMinion[i + 1][k]->collisionWithAnotherUnit();
 									}
-									/*
-									if(lMinion[i][j]->getYPos() + lMinion[i][j]->iHitBoxY < lMinion[i + 1][k]->getYPos() + lMinion[i + 1][k]->iHitBoxY) {
-										lMinion[i][j]->onAnotherMinion = true;
-										continue;
-									} else {
-										lMinion[i + 1][k]->onAnotherMinion = true;
-										continue;
-									}*/
 
 									if(lMinion[i][j]->getYPos() - 4 <= lMinion[i + 1][k]->getYPos() + lMinion[i + 1][k]->iHitBoxY && lMinion[i][j]->getYPos() + 4 >= lMinion[i + 1][k]->getYPos() + lMinion[i + 1][k]->iHitBoxY) {
 										lMinion[i + 1][k]->onAnotherMinion = true;
@@ -378,11 +370,6 @@ void Map::Draw(SDL_Renderer* rR) {
 	for(unsigned int i = 0; i < vLevelText.size(); i++) {
 		CCFG::getText()->Draw(rR, vLevelText[i]->getText(), vLevelText[i]->getXPos() + (int)fXPos, vLevelText[i]->getYPos());
 	}
-	/*
-	if(drawLines) {
-		aa->Draw(rR, (int)fXPos, -16);
-		DrawLines(rR);
-	}*/
 
 	for(unsigned int i = 0; i < lBubble.size(); i++) {
 		lBubble[i]->Draw(rR, vBlock[lBubble[i]->getBlockID()]->getSprite()->getTexture());
