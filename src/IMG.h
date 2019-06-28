@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef IMG_H
+#ifndef IMG_H
 #define IMG_H
 
 #include "header.h"
