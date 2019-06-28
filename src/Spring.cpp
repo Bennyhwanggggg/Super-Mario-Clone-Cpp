@@ -8,7 +8,7 @@ Spring::Spring(int iXPos, int iYPos) {
     this->iHitBoxX = 32;
     this->iHitBoxY = 72;
 
-    this->iBlockID = CCore:getMap()->getLevelType() == 0 || CCore::getMap()->getLevelType() == 4 ? 37 : 40;
+    this->iBlockID = CCore::getMap()->getLevelType() == 0 || CCore::getMap()->getLevelType() == 4 ? 37 : 40;
 
     this->minionState = 0;
     this->nextFrameID = 4;
@@ -50,7 +50,7 @@ void Spring::Update() {
                 break;
             case 3:
                 iBlockID = iBlockID == 38 ? 37 : 40;
-                minionState = 0
+                minionState = 0;
                 CCore::getMap()->getPlayer()->setYPos(CCore::getMap()->getPlayer()->getYPos() - 16.0f);
                 CCore::getMap()->getPlayer()->resetJump();
                 CCore::getMap()->getPlayer()->startJump(4 + (extraJump ? 5 : 0));

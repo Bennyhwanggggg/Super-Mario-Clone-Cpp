@@ -3,7 +3,7 @@
 CIMG::CIMG(void) { }
 
 CIMG::CIMG(std::string filename, SDL_Renderer* rR) {
-    setIMG(fileName, rR);
+    setIMG(filename, rR);
 }
 
 CIMG::~CIMG(void) {
@@ -33,12 +33,12 @@ void CIMG::Draw(SDL_Renderer* rR, SDL_Rect rCrop, SDL_Rect rRect) {
 }
 
 void CIMG::setIMG(std::string filename, SDL_Renderer* rR) {
-    fileName = "files/images/" + fileName + ".bmp";
+    filename = "files/images/" + filename + ".bmp";
     SDL_Surface* loadedSurface = SDL_LoadBMP(filename.c_str());
-    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSUrface->format, 255, 0, 255));
+    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 255, 0, 255));
 
     tIMG = SDL_CreateTextureFromSurface(rR, loadedSurface);
-    int iWidith;
+    int iWidth;
     int iHeight;
 
     SDL_QueryTexture(tIMG, NULL, NULL, &iWidth, &iHeight);

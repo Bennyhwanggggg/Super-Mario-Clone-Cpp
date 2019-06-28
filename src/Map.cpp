@@ -405,7 +405,7 @@ void Map::DrawMap(SDL_Renderer* rR) {
 void Map::DrawMinions(SDL_Renderer* rR) {
 	for(int i = 0; i < iMinionListSize; i++) {
 		for(int j = 0, jSize = lMinion[i].size(); j < jSize; j++) {
-			lMinion[i][j]->Draw(rR, vMinion[lMinion[i][j]->getBloockID()]->getSprite()->getTexture());
+			lMinion[i][j]->Draw(rR, vMinion[lMinion[i][j]->getBlockID()]->getSprite()->getTexture());
 			//CCFG::getText()->DrawWS(rR, std::to_string(i), lMinion[i][j]->getXPos() + (int)fXPos, lMinion[i][j]->getYPos(), 0, 0, 0, 8);
 		}
 	}

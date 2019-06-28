@@ -48,7 +48,7 @@ void Minion::minionPhysics() {
     if (jumpState == 1) {
         physicsState1();
     } else {
-        if (!CCore::getMap()->checkCollisionLB((int)fXPos + 2, (int)fYPos + 2, iHitBoxY, true) && !CCore::getMap()->checkCollsionRB((int)fXPos - 2, (int)fYPos + 2, iHitBoxX, iHitBoxY, true) && !onAnotherMinion) {
+        if (!CCore::getMap()->checkCollisionLB((int)fXPos + 2, (int)fYPos + 2, iHitBoxY, true) && !CCore::getMap()->checkCollisionRB((int)fXPos - 2, (int)fYPos + 2, iHitBoxX, iHitBoxY, true) && !onAnotherMinion) {
             physicsState2();
         } else {
             jumpState = 0;
@@ -154,12 +154,12 @@ void Minion::collisionWithAnotherUnit() {
 
 }
 
-void Minon::lockMinion() {
+void Minion::lockMinion() {
 
 }
 
 void Minion::Spawn() {
-    if ((fXPos >= -CCore::getMap()->getXPos() && fXPos <= -CCore::getMap()->getXPos() + CCFG::GAME_WIDTH) || (fXPos + iHitBoXX >= -CCore::getMap()->getXPos() && fXPos + iHitBoxX <= -CCore::getMap()->getXPos() + CCFG::GAME_WIDTH)) {
+    if ((fXPos >= -CCore::getMap()->getXPos() && fXPos <= -CCore::getMap()->getXPos() + CCFG::GAME_WIDTH) || (fXPos + iHitBoxX >= -CCore::getMap()->getXPos() && fXPos + iHitBoxX <= -CCore::getMap()->getXPos() + CCFG::GAME_WIDTH)) {
         minionSpawned = true;
     }
 }
@@ -195,7 +195,7 @@ void Minion::minionDeathAnimation() {
 	}
 }
 
-int Minion::getBloockID() {
+int Minion::getBlockID() {
 	return iBlockID;
 }
 

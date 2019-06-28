@@ -18,6 +18,6 @@ public:
     ~MusicManager(void);
     Mix_Music* loadMusic(std::string fileName);
     void PlayMusic();
-}
+};
 
 #endif // ! MUSICMANAGER_H

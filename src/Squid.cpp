@@ -39,14 +39,14 @@ void Squid::Update() {
                 if (fYPos + 52 > CCore::getMap()->getPlayer()->getYPos()) {
                     moveDirection = CCore::getMap()->getPlayer()->getXPos() - CCore::getMap()->getXPos() + CCore::getMap()->getPlayer()->getHitBoxX()/2 > fXPos;
                     moveXDistance = 96 + rand()%32;
-                    changeBlockID;
+                    changeBlockID();
                 } else {
                     fYPos += 1;
                 }
             }
         } else {
             if (moveXDistance == 64) {
-                changeBlockID()
+                changeBlockID();
             }
             fXPos += moveDirection ? 2 : -2;
 
