@@ -3411,7 +3411,6 @@ void Map::createMap() {
 	}
 
 	// ----- CREATE MAP -----
-
 	this->underWater = false;
 	this->bTP = false;
 }
