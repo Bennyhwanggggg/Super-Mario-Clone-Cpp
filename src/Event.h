@@ -47,7 +47,7 @@ public:
 		eVINE1,
 		eVINE2,
 		eVINESPAWN,
-    }
+    };
 
     std::vector<animationType> vOLDDir;
     std::vector<int> vOLDLength;
@@ -92,6 +92,6 @@ public:
     void newLevel();
 
     void resetRedraw();
-}
+};
 
 #endif // !Event_H

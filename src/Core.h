@@ -56,6 +56,6 @@ public:
     static bool mouseRightPressed;
 
     static Map* getMap();
-}
+};
 
 #endif

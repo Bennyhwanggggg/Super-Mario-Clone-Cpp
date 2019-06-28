@@ -11,7 +11,7 @@ private:
     unsigned int iTime;
 
     int cR;
-    int cG
+    int cG;
     int cB;
     int nR;
     int nG;
@@ -39,8 +39,8 @@ public:
     void nextColor();
     int getColorStep(int iOld, int iNew);
 
-    void setBackgroudColor(SDL_Renderer* rR);
+    void setBackgroundColor(SDL_Renderer* rR);
     void updateTime();
-}
+};
 
 #endif // !ABOUTMENU_H

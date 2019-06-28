@@ -22,12 +22,12 @@ public:
     int iPoints;
 
     int castleFlagExtraXPos;
-    int castleFlagY
+    int castleFlagY;
 
     void Update();
     void UpdateCastleFlag();
     void Draw(SDL_Renderer* rR, CIMG* iIMG);
     void DrawCastleFlag(SDL_Renderer* rR, CIMG* iIMG);
-}
+};
 
 #endif // !FLAG_H

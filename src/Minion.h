@@ -48,7 +48,7 @@ public:
     virtual void updateXPos();
 
     virtual bool updateMinion();
-    virtual minionPhysics();
+    virtual void minionPhysics();
 
     virtual void collisionEffect();
     virtual void minionDeathAnimation();
@@ -73,6 +73,6 @@ public:
     int getXPos();
     int getYPos();
     void setYPos(int iYPos);
-}
+};
 
 #endif // ! MINION_H

@@ -21,6 +21,6 @@ public:
     void minionPhysics();
     void collisionWithPlayer(bool TOP);
     void setMinionState(int minionState);
-}
+};
 
 #endif // !SPRING_H

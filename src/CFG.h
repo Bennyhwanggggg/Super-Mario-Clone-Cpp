@@ -34,8 +34,10 @@ public:
 
     static Text* getText();
 
-    static MenuManger* getMM();
+    static MenuManager* getMM();
     static Music* getMusic();
 
     static bool canMoveBackward;
 };
+
+#endif

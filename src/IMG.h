@@ -13,7 +13,7 @@ private:
 
 public:
     CIMG(void);
-    CIMG(std::string, fileName, SDL_Renderer* rR);
+    CIMG(std::string fileName, SDL_Renderer* rR);
     ~CIMG(void);
 
     void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset);
@@ -24,6 +24,6 @@ public:
     SDL_Texture* getIMG();
     void setIMG(std::string filename, SDL_Renderer* rR);
     SDL_Rect getRect();
-}
+};
 
 #endif

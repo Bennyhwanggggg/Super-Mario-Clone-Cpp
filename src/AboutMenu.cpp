@@ -114,7 +114,7 @@ void AboutMenu::nextColor() {
         nB = 203;
         break;
     case 1:
-        nR = 196
+        nR = 196;
         nG = 197;
 		nB = 223;
 		break;

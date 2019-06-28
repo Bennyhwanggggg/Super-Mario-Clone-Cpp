@@ -24,6 +24,6 @@ public:
     void updateXPos();
     void collisionWithPlayer(bool TOP);
     void minionPhysics();
-}
+};
 
 #endif // !FIREBALL_H
