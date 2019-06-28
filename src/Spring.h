@@ -3,7 +3,7 @@
 #ifndef SPRING_H
 #define SPRING_H
 
-#include "Minon.h"
+#include "Minion.h"
 
 class Spring: public Minion
 {
