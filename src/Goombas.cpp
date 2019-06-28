@@ -43,9 +43,9 @@ void Goombas::collisionWithPlayer(bool TOP) {
 			CCore::getMap()->getPlayer()->startJump(1);
 			points(100);
 			CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cSTOMP);
-        } else {
-            CCore::getMap()->playerDeath(true, false);
-        }
+        } 
+    } else {
+        CCore::getMap()->playerDeath(true, false);
     }
 }
 
