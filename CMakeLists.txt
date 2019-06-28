@@ -23,11 +23,11 @@ find_package(SDL2_Image REQUIRED)
 find_package(SDL2_Mixer REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_MIXER_INCLUDE_DIR})
 
-file(COPY uNext/files DESTINATION .)
+file(COPY src/files DESTINATION .)
 
-include_directories(uNext)
+include_directories(src)
 
-file(GLOB_RECURSE uMario_SOURCES "uNext/*.cpp")
+file(GLOB_RECURSE uMario_SOURCES "src/*.cpp")
 add_executable (uMario ${uMario_SOURCES})
 
 target_link_libraries(uMario ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2_MIXER_LIBRARY})
