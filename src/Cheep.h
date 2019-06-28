@@ -8,7 +8,8 @@
 class Cheep : public Minion
 {
 private:
-	bool moveY, moveYDIR;
+	bool moveY;
+	bool moveYDIR;
 public:
 	Cheep(int iXPos, int iYPos, int minionType, int moveSpeed, bool moveDiretion = false);
 	~Cheep(void);

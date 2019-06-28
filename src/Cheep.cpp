@@ -3,7 +3,7 @@
 #include "stdlib.h"
 #include "time.h"
 
-Cheep::Cheep(int iXPos, int iYPos, int minionType, int moveSpeed, int moveDirection) {
+Cheep::Cheep(int iXPos, int iYPos, int minionType, int moveSpeed, bool moveDirection) {
     srand((unsigned)time(NULL));
     this->fXPos = (float)iXPos;
     this->fYPos = (float)iYPos + rand() % 16;
