@@ -28,6 +28,13 @@ void CIMG::Draw(SDL_Renderer* rR, int iXOffset, int iYOffset, bool bRotate) {
     }
 }
 
+void CIMG::DrawVert(SDL_Renderer* rR, int iXOffset, int iYOffset) {
+	rRect.x = iXOffset;
+	rRect.y = iYOffset;
+
+	SDL_RenderCopyEx(rR, tIMG, NULL, &rRect, 180.0, NULL, SDL_FLIP_HORIZONTAL);
+}
+
 void CIMG::Draw(SDL_Renderer* rR, SDL_Rect rCrop, SDL_Rect rRect) {
     SDL_RenderCopy(rR, tIMG, &rCrop, &rRect);
 }
