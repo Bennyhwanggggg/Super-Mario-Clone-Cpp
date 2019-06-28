@@ -30,6 +30,8 @@ public:
     static int keyIDSpace;
     static int keyIDShift;
 
+
+	static std::string getKeyString(int keyID);
     static CIMG* getSMBLOGO();
 
     static Text* getText();
