@@ -30,3 +30,6 @@ cmake ..
 make
 ./uMario
 ```
+
+## Help needed
+- Compile for Windows. Not sure how to setup SDL2_mixer as it seem to have trouble linking on the `.dll` file.
