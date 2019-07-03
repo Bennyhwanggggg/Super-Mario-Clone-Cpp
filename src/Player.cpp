@@ -4,50 +4,51 @@
 #include "time.h"
 
 Player::Player(SDL_Renderer* rR, float fXPos, float fYPos) {
-    this->fXPos = fXPos;
-    this->fYPos = fYPos;
+	this->fXPos = fXPos;
+	this->fYPos = fYPos;
+	this->iNumOfLives = 3;
 
-    this->iNumOfLives = 3;
-    this->iSpriteID = 1;
-    this->iScore = this->iCoins = 0;
-    this->iFrameID = 0;
-    this->iComboPoints = 1;
+	this->iSpriteID = 1;
 
-    this->nextBubbleTime = 0;
-    this->nextFallFrameID = 0;
+	this->iScore = this->iCoins = 0;
+	this->iFrameID = 0, this->iComboPoints = 1;
 
-    this->powerLVL = 0;
-    this->inLevelAnimation = false;
-    this->inLevelAnimationType = false;
+	this->nextBubbleTime = 0;
+	this->nextFallFrameID = 0;
 
-    this->unKillAble = false;
-    this->starEffect = false;
-    this->unKillAbleTimeFrameID = 0;
+	this->powerLVL = 0;
+	this->inLevelAnimation = false;
+	this->inLevelAnimationType = false;
 
-    this->inLevelDownAnimation = false;
-    this->inLevelDownAnimationFrameID = 0;
+	this->unKillAble = false;
+	this->starEffect = false;
+	this->unKillAbleTimeFrameID = 0;
 
-    this->moveDirection = true;
-    this->currentMaxMove = 4;
-    this->moveSpeed = 0;
-    this->bMove = false;
-    this->changeMoveDirection = false;
-    this->bSquat = false;
+	this->inLevelDownAnimation = false;
+	this->inLevelDownAnimationFrameID = 0;
 
-    this->onPlatformID = -1;
-    this->springJump = false;
+	this->moveDirection = true;
+	this->currentMaxMove = 4;
+	this->moveSpeed = 0;
+	this->bMove = false;
+	this->changeMoveDirection = false;
+	this->bSquat = false;
 
-    this->iTimePassed = SDL_GetTicks();
+	this->onPlatformID = -1;
 
-    this->jumpState = 0;
-    this->startJumpSpeed = 7.6f;
-    this->currentFallingSpeed = 2.7f;
+	this->springJump = false;
 
-    this->iMoveAnimationTime = 0;
-    this->nextFireBallFrameID = 8;
+	this->iTimePassed = SDL_GetTicks();
 
+	this->jumpState = 0;
+	this->startJumpSpeed = 7.65f;
+	this->currentFallingSpeed = 2.7f;
 
-    // ----- LOAD SPRITE
+	this->iMoveAnimationTime = 0;
+
+	this->nextFireBallFrameID = 8;
+
+	// ----- LOAD SPRITE
 	std::vector<std::string> tempS;
 	std::vector<unsigned int> tempI;
 
@@ -382,13 +383,11 @@ void Player::playerPhysics() {
 			if (currentJumpSpeed < 2.5f) {
 				currentJumpSpeed = 2.5f;
 			}
-
 			if(!CCFG::keySpace && currentJumpDistance > 64 && !springJump) {
 				jumpDistance = 16;
 				currentJumpDistance = 0;
 				currentJumpSpeed = 2.5f;
 			}
-
 			if (jumpDistance <= currentJumpDistance) {
 				jumpState = 2;
 			}
@@ -436,10 +435,7 @@ void Player::playerPhysics() {
 
 					updateYPos((int)currentFallingSpeed);
 				}
-				
-
 				jumpState = 2;
-
 				setMarioSpriteID(5);
 			} else if(jumpState == 2) {
 				resetJump();
@@ -457,9 +453,7 @@ void Player::playerPhysics() {
 			if(fYPos > CCFG::GAME_HEIGHT - 12*32 - 16) {
 				updateYPos(-2);
 				currentJumpDistance += 2;
-
 				swimingAnimation();
-
 				if (jumpDistance <= currentJumpDistance) {
 					jumpState = 2;
 					currentJumpDistance = 0;
@@ -484,9 +478,7 @@ void Player::playerPhysics() {
 						updateYPos(2);
 					}
 				}
-
 				jumpState = 2;
-
 				swimingAnimation();
 			} else if(jumpState == 2) {
 				resetJump();
@@ -496,79 +488,82 @@ void Player::playerPhysics() {
 }
 
 void Player::movePlayer() {
-    if (bMove && !changeMoveDirection && (!bSquat || powerLVL == 0)) {
-        if (moveSpeed > currentMaxMove) {
-            --moveSpeed;
-        } else if (SDL_GetTicks() - (100 + 35*moveSpeed) >= iTimePassed && moveSpeed < currentMaxMove) {
-            ++moveSpeed;
-            iTimePassed = SDL_GetTicks();
-        } else if (moveSpeed == 0) {
-            moveSpeed = 1;
-        }
-    } else {
-        if (SDL_GetTicks() - (50 + 15 * (currentMaxMove - moveSpeed) * (bSquat && powerLVL > 0 ? 6 : 1)) > iTimePassed && moveSpeed != 0) {
-            --moveSpeed;
-            iTimePassed = SDL_GetTicks();
-            if (jumpState == 0 && !CCore::getMap()->getUnderWater()) {
-                setMarioSpriteID(6);
-            }
-        }
+	if (bMove && !changeMoveDirection && (!bSquat || powerLVL == 0)) {
+		if (moveSpeed > currentMaxMove) {
+			--moveSpeed;
+		}
+		else if (SDL_GetTicks() - (100 + 35 * moveSpeed) >= iTimePassed && moveSpeed < currentMaxMove) {
+			++moveSpeed;
+			iTimePassed = SDL_GetTicks();
+		}
+		else if (moveSpeed == 0) {
+			moveSpeed = 1;
+		}
+	} else {
+		if (SDL_GetTicks() - (50 + 15 * (currentMaxMove - moveSpeed) * (bSquat && powerLVL > 0 ? 6 : 1)) > iTimePassed && moveSpeed != 0) {
+			--moveSpeed;
+			iTimePassed = SDL_GetTicks();
+			if (jumpState == 0 && !CCore::getMap()->getUnderWater()) setMarioSpriteID(6);
+		}
+		
+		if (changeMoveDirection && moveSpeed <= 1) {
+			moveDirection = newMoveDirection;
+			changeMoveDirection = false;
+			bMove = true;
+		}
+	}
+	
+	if (moveSpeed > 0) {
+		if (moveDirection) {
+			updateXPos(moveSpeed);
+		}
+		else {
+			updateXPos(-moveSpeed);
+		}
 
-        if (changeMoveDirection && moveSpeed <= 1) {
-            moveDirection = newMoveDirection;
-            changeMoveDirection = false;
-            bMove = true;
-        }
-    }
+		// ----- SPRITE ANIMATION
+		if(CCore::getMap()->getUnderWater()) {
+			swimingAnimation();
+		} else if (!changeMoveDirection && jumpState == 0 && bMove) {
+			moveAnimation();
+		}
+		// ----- SPRITE ANIMATION
+	}
+	else if (jumpState == 0) {
+		setMarioSpriteID(1);
+		updateXPos(0);
+	} else {
+		updateXPos(0);
+	}
 
-    if (moveSpeed > 0) {
-        if (moveDirection) {
-            updateXPos(moveSpeed);
-        } else {
-            updateXPos(-moveSpeed);
-        }
-
-        // Moving Animation
-        if (CCore::getMap()->getUnderWater()) {
-            swimingAnimation();
-        } else if (!changeMoveDirection && jumpState == 0 && bMove) {
-            moveAnimation();
-        }
-    } else if (jumpState == 0) {
-        setMarioSpriteID(1);
-        updateXPos(0);
-    } else {
-        updateXPos(0);
-    }
-
-    if (bSquat && !CCore::getMap()->getUnderWater() && powerLVL > 0) {
-        setMarioSpriteID(7);
-    }
+	if(bSquat && !CCore::getMap()->getUnderWater() && powerLVL > 0) {
+		setMarioSpriteID(7);
+	}
 }
 
 void Player::powerUPAnimation() {
-    if (inLevelAnimation) {
-        if (inLevelAnimation%15 < 5) {
-            iSpriteID = 12;
-            if (inLevelAnimationFrameID != 0 && inLevelAnimationFrameID%15 == 0) {
-                fYPos += 16;
-                fXPos -= 4;
-            }
-        } else if (inLevelAnimation%15 < 10) {
-            iSpriteID = 67;
-            if (inLevelAnimationFrameID%15 == 5) {
-                fYPos += 16;
-                fXPos += 1;
-            }
-        } else {
-            iSpriteID = 1;
+	if(inLevelDownAnimation) {
+		if(inLevelAnimationFrameID%15 < 5) {
+			iSpriteID = 12;
+			if(inLevelAnimationFrameID != 0 && inLevelAnimationFrameID%15 == 0) {
+				fYPos += 16;
+				fXPos -= 4;
+			}
+		} else if(inLevelAnimationFrameID%15 < 10) {
+			iSpriteID = 67;
+			if(inLevelAnimationFrameID%15 == 5) {
+				fYPos += 16;
+				fXPos += 1;
+			}
+		} else {
+			iSpriteID = 1;
 			if(inLevelAnimationFrameID%15 == 10) {
 				fYPos -= 32;
 				fXPos += 3;
 			}
-        }
+		}
 
-        ++inLevelAnimationFrameID;
+		++inLevelAnimationFrameID;
 		if(inLevelAnimationFrameID > 59) {
 			inLevelAnimation = false;
 			fYPos += 32;
@@ -576,9 +571,8 @@ void Player::powerUPAnimation() {
 				setMarioSpriteID(5);
 			}
 		}
-
-    } else if (powerLVL == 1) {
-        if(inLevelAnimationFrameID%15 < 5) {
+	} else if(powerLVL == 1) {
+		if(inLevelAnimationFrameID%15 < 5) {
 			iSpriteID = 1;
 			if(inLevelAnimationFrameID != 0 && inLevelAnimationFrameID%15 == 0) {
 				fYPos += 32;
@@ -598,32 +592,31 @@ void Player::powerUPAnimation() {
 			}
 		}
 
-        ++inLevelAnimationFrameID;
+		++inLevelAnimationFrameID;
 		if(inLevelAnimationFrameID > 59) {
 			inLevelAnimation = false;
 			if(jumpState != 0) {
 				setMarioSpriteID(5);
 			}
 		}
+	} else if(powerLVL == 2) {
+		if(inLevelAnimationFrameID%10 < 5) {
+			iSpriteID = iSpriteID%11 + 22;
+		} else {
+			iSpriteID = iSpriteID%11 + 33;
+		}
 
-    } else if (powerLVL == 2) {
-        if (inLevelAnimationFrameID%10 < 5) {
-            iSpriteID = iSpriteID%11 + 22;
-        } else {
-            iSpriteID = iSpriteID%11 + 33;
-        }
-
-        ++inLevelAnimationFrameID;
-        if (inLevelAnimationFrameID > 59) {
-            inLevelAnimation = false;
-            if (jumpState != 0) {
-                setMarioSpriteID(5);
-            }
-            iSpriteID = iSpriteID%11 + 22;
-        }
-    } else {
-        inLevelAnimation = false;
-    }
+		++inLevelAnimationFrameID;
+		if(inLevelAnimationFrameID > 59) {
+			inLevelAnimation = false;
+			if(jumpState != 0) {
+				setMarioSpriteID(5);
+			}
+			iSpriteID = iSpriteID%11 + 22;
+		}
+	} else {
+		inLevelAnimation = false;
+	}
 }
 
 void Player::moveAnimation() {
@@ -692,8 +685,6 @@ void Player::createFireBall() {
 	}
 }
 
-/* ******************************************** */
-
 void Player::jump() {
 	if(CCore::getMap()->getUnderWater()) {
 		startJump(1);
@@ -738,8 +729,6 @@ void Player::resetJump() {
 	nextFallFrameID = 0;
 	springJump = false;
 }
-
-/* ******************************************** */
 
 void Player::updateXPos(int iN) {
 	checkCollisionBot(iN, 0);
@@ -891,8 +880,6 @@ void Player::updateYPos(int iN) {
 		fYPos = -80;
 	}
 }
-
-/* ******************************************** */
 
 bool Player::checkCollisionBot(int nX, int nY) {
 	Vector2* vLT = getBlockLB(fXPos - CCore::getMap()->getXPos() + nX, fYPos + nY);
