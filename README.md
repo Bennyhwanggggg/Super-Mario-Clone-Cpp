@@ -1,5 +1,5 @@
 # Super Mario Clone
-Super Mario Clone made using C++ and SDL2.  
+Super Mario Clone made using C++ and SDL2. Compose of many levels like the actual Super Mario Game. 
 
 ## Build Pre-requisites
 Windows:  
