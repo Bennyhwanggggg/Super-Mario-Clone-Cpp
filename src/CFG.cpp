@@ -13,11 +13,11 @@ CCFG::~CCFG(void) {
 int CCFG::GAME_HEIGHT = 448;
 int CCFG::GAME_WIDTH = 800;
 
-Text* CCFG::oText = new Text();
-CIMG* CCFG::tSMBLOGO = new CIMG();
+Text* CCFG::oText = NULL;
+CIMG* CCFG::tSMBLOGO = NULL;
 
-MenuManager* CCFG::oMM = new MenuManager();
-Music* CCFG::oMusic = new Music();
+MenuManager* CCFG::oMM = NULL;
+Music* CCFG::oMusic = NULL;
 
 bool CCFG::keySpace = false;
 int CCFG::keyIDA = 0;
@@ -29,18 +29,26 @@ int CCFG::keyIDShift = 0;
 bool CCFG::canMoveBackward = true;
 
 Text* CCFG::getText() {
+	if (!oText)
+		oText = new Text();
 	return oText;
 }
 
 MenuManager* CCFG::getMM() {
+	if (!oMM)
+		oMM = new MenuManager();
 	return oMM;
 }
 
 Music* CCFG::getMusic() {
+	if (!oMusic)
+		oMusic = new Music();
 	return oMusic;
 }
 
 CIMG* CCFG::getSMBLOGO() {
+	if (!tSMBLOGO)
+		tSMBLOGO = new CIMG();
 	return tSMBLOGO;
 }
 
